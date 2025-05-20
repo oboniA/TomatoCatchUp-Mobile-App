@@ -1,0 +1,12 @@
+IN cmd:
+npx create-expo-app android-app --template blank
+cd android-app
+
+To RUN:
+npx expo start --lan
+
+
+
+
+
+
