@@ -1,13 +1,24 @@
 import React from 'react';
-import { View } from 'react-native';
-import StartupScreen from './app-screens/StartupScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import StartupScreen from './app-screens/StartupScreen';
+import HomeScreen from './app-screens/HomeScreen';
+
+
+const NavStack = createNativeStackNavigator();
 
 export default function App() {
+
   return (
-    <View style={{ flex: 1 }}>
-      <StartupScreen />
-    </View>
+    
+    <NavigationContainer>
+      <NavStack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+        <NavStack.Screen name="Splash" component={StartupScreen} />
+        <NavStack.Screen name="Home" component={HomeScreen} />
+      </NavStack.Navigator>
+    </NavigationContainer>
+
   );
 }
 

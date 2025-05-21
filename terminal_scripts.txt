@@ -2,6 +2,10 @@ IN cmd:
 npx create-expo-app mobile-app --template blank
 cd mobile-app
 
+npm install @react-navigation/native
+npm install @react-navigation/native-stack
+npx expo install react-native-screens react-native-safe-area-context
+
 To RUN:
 npx expo start --lan
 

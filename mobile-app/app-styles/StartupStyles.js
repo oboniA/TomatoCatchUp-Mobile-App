@@ -20,7 +20,7 @@ export default StyleSheet.create({
     // text below logo
     text: {
         fontSize: 40,
-        color: 'maroon',
+        color: 'brown',
         fontWeight: 'bold',
   },
 });
