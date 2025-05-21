@@ -10,6 +10,12 @@ export default function HomeScreen() {
 
         // home page background
         <View style={ homestyles.container } >
+            
+            {/* page logo */}
+            <View style={ homestyles.header } >
+                <Image source={require('../assets/logo.png')} style={ homestyles.homeLogo } />
+                <Text style={ homestyles.logoText }> TomatoCatchUp </Text>
+            </View>
 
             {/* page title */}
             <Text style={ homestyles.title } > Tomato Leaf Disease Detector </Text>

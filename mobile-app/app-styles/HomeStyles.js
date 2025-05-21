@@ -11,6 +11,26 @@ export default StyleSheet.create ({
         //paddingVertical: ??,
     },
 
+    header: {
+        position: 'absolute',   // absolutely position to float over content
+        top: 50,                
+        left: 20,               
+        flexDirection: 'row',   
+        alignItems: 'center',
+        zIndex: 10,             // on top of everything else
+    },
+
+    homeLogo: {
+        width: 70,
+        height: 70,
+    },
+
+    logoText: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: 'brown'
+    },
+
     title: {
         fontSize: 30,
         marginBottom: 40,
@@ -22,12 +42,6 @@ export default StyleSheet.create ({
     buttonRow: {
         flexDirection: 'column',
         gap: 30,
-    },
-
-    iconButton: {
-        alignItems: 'center', 
-        justifyContent: 'center',
-        marginHorizontal: 10,
     },
 
     icon: {
@@ -43,5 +57,12 @@ export default StyleSheet.create ({
         color: 'brown',
         justifyContent: 'center',
     },
+
+    iconButton: {
+        alignItems: 'center', 
+        justifyContent: 'center',
+        marginHorizontal: 10,
+    },
+
 
 });
