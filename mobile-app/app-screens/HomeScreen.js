@@ -1,9 +1,37 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
+import * as ImagePicker from 'expo-image-picker';
+import { Alert } from 'react-native';
 import homestyles from '../app-styles/HomeStyles';
 
 
 export default function HomeScreen() {
+
+    // functionality for Upload from photo Gallery
+    const imageUpload = async () => {
+        const accessPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+        // when no permission to access gallery
+        if (!accessPermission.granted) {
+            Alert.alert('Access Denied!', 'Allow Access to Your Photos.');
+            return;
+        }
+        
+        // when permission granted to access gallery
+        const accessPhotoes = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
+        });
+
+        // when user selects an image
+        if (!accessPhotoes.canceled) {
+            const selectedImage = accessPhotoes.assets[0]  // picks first image
+            Alert.alert('Image Selected', selectedImage.uri);
+            console.log('Image URI: ', selectedImage.uri);
+        }
+    };
+
 
     // Page Layout
     return (
@@ -24,7 +52,7 @@ export default function HomeScreen() {
             <View style={ homestyles.buttonRow }>
 
                 {/* Upload from Folder */}
-                <TouchableOpacity style={ homestyles.iconButton } >
+                <TouchableOpacity style={ homestyles.iconButton } onPress={ imageUpload } >
                     <Image 
                         source={require('../assets/folderimage.png')} 
                         style={ homestyles.icon } 

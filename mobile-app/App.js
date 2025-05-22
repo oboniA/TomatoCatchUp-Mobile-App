@@ -13,10 +13,12 @@ export default function App() {
   return (
     
     <NavigationContainer>
+
       <NavStack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
         <NavStack.Screen name="Splash" component={StartupScreen} />
         <NavStack.Screen name="Home" component={HomeScreen} />
       </NavStack.Navigator>
+      
     </NavigationContainer>
 
   );

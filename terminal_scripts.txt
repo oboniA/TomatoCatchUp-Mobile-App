@@ -5,9 +5,12 @@ cd mobile-app
 npm install @react-navigation/native
 npm install @react-navigation/native-stack
 npx expo install react-native-screens react-native-safe-area-context
+npx expo install expo-image-picker
 
 To RUN:
 npx expo start --lan
+
+
 
 
 
