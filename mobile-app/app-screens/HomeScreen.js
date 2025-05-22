@@ -1,7 +1,8 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-import { imageUpload } from '../utils/homescreen-utils/UploadImage';
-import { imageCapture } from '../utils/homescreen-utils/CaptureImage';
+// import { imageUpload } from '../utils/homescreen-utils/UploadImage';
+// import { imageCapture } from '../utils/homescreen-utils/CaptureImage';
+import { imageAction } from '../utils/homescreen-utils/ImageHandler';
 import homestyles from '../app-styles/HomeStyles';
 
 
@@ -26,7 +27,7 @@ export default function HomeScreen() {
             <View style={ homestyles.buttonRow }>
 
                 {/* Upload from Folder */}
-                <TouchableOpacity style={ homestyles.iconButton } onPress={ imageUpload } >
+                <TouchableOpacity style={ homestyles.iconButton } onPress={() => imageAction('gallery')} >
                     <Image 
                         source={require('../assets/folderimage.png')} 
                         style={ homestyles.icon } 
@@ -36,7 +37,7 @@ export default function HomeScreen() {
                 </TouchableOpacity>
 
                 {/* Camera Upload */}
-                <TouchableOpacity style={ homestyles.iconButton } onPress={ imageCapture } >
+                <TouchableOpacity style={ homestyles.iconButton } onPress={() => imageAction('camera')} >
                     <Image 
                         source={require('../assets/cameraimage.png')} 
                         style={ homestyles.icon } 
