@@ -18,7 +18,7 @@ export default function App() {
         <NavStack.Screen name="Splash" component={StartupScreen} />
         <NavStack.Screen name="Home" component={HomeScreen} />
       </NavStack.Navigator>
-      
+
     </NavigationContainer>
 
   );
