@@ -1,8 +1,6 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-// import { imageUpload } from '../utils/homescreen-utils/UploadImage';
-// import { imageCapture } from '../utils/homescreen-utils/CaptureImage';
-import { imageAction } from '../utils/homescreen-utils/ImageHandler';
+import { imageAction } from '../app-utils/homescreen-utils/ImagePickers';
 import homestyles from '../app-styles/HomeStyles';
 
 
