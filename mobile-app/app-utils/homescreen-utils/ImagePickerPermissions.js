@@ -1,5 +1,6 @@
 import * as ImagePicker from 'expo-image-picker';
 import { Alert, Linking } from 'react-native';
+import { ERROR_MESSAGES } from './ImagePickerConstants';
 
 
 export async function galleryPermission() {
@@ -8,7 +9,7 @@ export async function galleryPermission() {
     
     // when no permission to access gallery
     if (!actionPermission) {
-        Alert.alert('Gallery Access Denied!', 'allow access to your Photos from the device settings.',
+        Alert.alert(ERROR_MESSAGES.GALLERY_PERMISSION_DENIED, ERROR_MESSAGES.GALLERY_PERMISSION_MESSAGE,
             [
                 { text: 'Cancel', style: 'cancel' },
                 { text: 'Settings', onPress: () => Linking.openSettings() },
@@ -25,7 +26,7 @@ export const cameraPermission = async() => {
 
     // when no permission to access camera
     if (!actionPermission) {
-        Alert.alert('Camera Access Denied!', 'allow Camera access from your device settings.',
+        Alert.alert(ERROR_MESSAGES.CAMERA_PERMISSION_DENIED, ERROR_MESSAGES.CAMERA_PERMISSION_MESSAGE,
             [
                 { text: 'Cancel', style: 'cancel' },
                 { text: 'Settings', onPress: () => Linking.openSettings() },
