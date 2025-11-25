@@ -3,41 +3,73 @@ import { Alert, Linking } from 'react-native';
 import { ERROR_MESSAGES } from './ImagePickerConstants';
 
 
-export async function galleryPermission() {
-    
-    const { actionPermission } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
-    // when no permission to access gallery
-    if (!actionPermission) {
-        Alert.alert(ERROR_MESSAGES.GALLERY_PERMISSION_DENIED, ERROR_MESSAGES.GALLERY_PERMISSION_MESSAGE,
-            [
-                { text: 'Cancel', style: 'cancel' },
-                { text: 'Settings', onPress: () => Linking.openSettings() },
+// Helper function for Alerts
+const permissionAlert = async (title, message, checkPermission) => {
+    return new Promise((resolve) => {
+        Alert.alert(title, message,
+            [   
+                // user clicks cancel button
+                { text: 'Cancel', onPress: resolve(false), style: 'cancel' },
+
+                // user clicks settings button
+                {   text: 'Settings', 
+                    onPress: () => {
+                        Linking.openSettings(); 
+                        // wait 1000ms (1s) for settings app to close and permission change to take effect
+                        setTimeout(async () => {
+                            const result = await checkPermission();
+                            resolve(result);
+                        }, 1000)
+                    } 
+                },
             ]
-        );
-         return false;
-    }
-    return true; 
+        )
+    })
 };
+
+// Bug: 
+// when asked permission. if access not given at the begining, 
+// fixing access in settings app still denies access later. 
+// persistant denial.
+
+// Bug Fixed: 
+// setTimeout gives user time to at least: open settings app + click allow + close app 
+// If shorter: might not work (settings still open); too slow for older or slower phones; 
+// If longer: may feel too slow to user
+                
+
+
+export async function galleryPermission() {
+    const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    
+    // when permission not granted to access gallery
+    if (!granted) {
+        return await permissionAlert(
+            ERROR_MESSAGES.GALLERY_PERMISSION_DENIED,
+            ERROR_MESSAGES.GALLERY_PERMISSION_MESSAGE,
+            galleryPermission
+        );
+    }   
+    return true; 
+}
 
 export const cameraPermission = async() => {
-    
-    const { actionPermission } = await ImagePicker.requestCameraPermissionsAsync();
+    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
 
-    // when no permission to access camera
-    if (!actionPermission) {
-        Alert.alert(ERROR_MESSAGES.CAMERA_PERMISSION_DENIED, ERROR_MESSAGES.CAMERA_PERMISSION_MESSAGE,
-            [
-                { text: 'Cancel', style: 'cancel' },
-                { text: 'Settings', onPress: () => Linking.openSettings() },
-            ]
+    // when permission not granted to access camera
+    if (!granted) {
+        return await permissionAlert(
+            ERROR_MESSAGES.CAMERA_PERMISSION_DENIED,
+            ERROR_MESSAGES.CAMERA_PERMISSION_MESSAGE,
+            cameraPermission
         );
-        return false;
     }
     return true;
-};
+}
 
-
+// CHANGED:
+// granted API used
+// instead of actionPermission: was invalid API
 
 
 
