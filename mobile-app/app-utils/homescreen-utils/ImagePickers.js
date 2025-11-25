@@ -9,11 +9,11 @@ export const imageAction = async (action) => {
             console.log('Gallery Image:', getImage.uri);
         }  
 
-    } else if ( action === 'camera') {
-        const getImage = await imagePickerGallery();
-        if (getImage) {
-            console.log('Captured Image:', getImage.uri);
-        }  
+    // } else if ( action === 'camera') {
+    //     const getImage = await imagePickerCamera();
+    //     if (getImage) {
+    //         console.log('Captured Image:', getImage.uri);
+    //     }  
         
     } else {
         Alert.alert('Error');
