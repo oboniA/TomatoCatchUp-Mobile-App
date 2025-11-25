@@ -1,14 +1,15 @@
 import { imagePickerGallery, imagePickerCamera } from './HandleImageActions';
+import { IMAGE_PICKER_ACTIONS } from './ImagePickerConstants';
+
 
 export const imageAction = async (action) => {
-
-    if ( action === 'gallery') {
+    if ( action === IMAGE_PICKER_ACTIONS.GALLERY) {
         const getImage = await imagePickerGallery();
         if (getImage) {
             console.log('Gallery Image:', getImage.uri);
         }  
 
-    } else if ( action === 'camera') {
+    } else if ( action === IMAGE_PICKER_ACTIONS.CAMERA) {
         const getImage = await imagePickerCamera();
         if (getImage) {
             console.log('Captured Image:', getImage.uri);
@@ -19,3 +20,4 @@ export const imageAction = async (action) => {
     }
 };
 
+// CHANGE: Using constants instead of magic strings
