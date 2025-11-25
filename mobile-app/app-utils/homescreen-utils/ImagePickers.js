@@ -1,4 +1,3 @@
-import React from 'react'
 import { imagePickerGallery, imagePickerCamera } from './HandleImageActions';
 
 export const imageAction = async (action) => {
@@ -9,11 +8,11 @@ export const imageAction = async (action) => {
             console.log('Gallery Image:', getImage.uri);
         }  
 
-    // } else if ( action === 'camera') {
-    //     const getImage = await imagePickerCamera();
-    //     if (getImage) {
-    //         console.log('Captured Image:', getImage.uri);
-    //     }  
+    } else if ( action === 'camera') {
+        const getImage = await imagePickerCamera();
+        if (getImage) {
+            console.log('Captured Image:', getImage.uri);
+        }  
         
     } else {
         Alert.alert('Error');

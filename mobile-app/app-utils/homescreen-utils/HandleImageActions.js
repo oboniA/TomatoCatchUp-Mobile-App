@@ -1,8 +1,8 @@
 import * as ImagePicker from 'expo-image-picker';
 import { Alert } from 'react-native';
-import { galleryPermission } from './ImagePickerPermissions';
+import { galleryPermission, cameraPermission } from './ImagePickerPermissions';
 
-
+// Gallery Access Functionality
 export async function imagePickerGallery() {
 
     const accessPermission = await galleryPermission();
@@ -32,9 +32,33 @@ export async function imagePickerGallery() {
     }
 }
 
-// Done: 
-// Seperated the Permission and Action functions
+// Camera Access Functionality
+export const imagePickerCamera = async() => {
 
-// TODO: 
-// Implemented only Gallery Access Functionality
-// Need to implement Camera Access Functionality
+    const accessPermission = await cameraPermission();
+            
+    // when no permission to access camera
+    if (!accessPermission) {
+        console.log('No permission, not opening camera');
+        return null;
+    }
+    
+    // when permission granted to access camera
+    const accessCamera = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        quality: 1,
+    });
+
+    // when user captures an image
+    if (!cameraCapture.canceled) {
+        const capturedImage = accessCamera.assets[0]  // picks first image
+        Alert.alert('Image Selected', capturedImage.uri);
+        return capturedImage;
+    }
+
+    return null;
+};
+
+
+
+

@@ -8,7 +8,7 @@ export async function galleryPermission() {
     
     // when no permission to access gallery
     if (!actionPermission) {
-        Alert.alert('Access Denied!', 'Allow Access to Your Photos from the settings.',
+        Alert.alert('Gallery Access Denied!', 'allow access to your Photos from the device settings.',
             [
                 { text: 'Cancel', style: 'cancel' },
                 { text: 'Settings', onPress: () => Linking.openSettings() },
@@ -19,8 +19,24 @@ export async function galleryPermission() {
     return true; 
 };
 
-//TODO: 
-// add camera permissions
+export const cameraPermission = async() => {
+    
+    const { actionPermission } = await ImagePicker.requestCameraPermissionsAsync();
+
+    // when no permission to access camera
+    if (!actionPermission) {
+        Alert.alert('Camera Access Denied!', 'allow Camera access from your device settings.',
+            [
+                { text: 'Cancel', style: 'cancel' },
+                { text: 'Settings', onPress: () => Linking.openSettings() },
+            ]
+        );
+        return false;
+    }
+    return true;
+};
+
+
 
 
 
