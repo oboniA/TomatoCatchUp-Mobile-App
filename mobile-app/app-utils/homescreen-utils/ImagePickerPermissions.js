@@ -27,17 +27,6 @@ const permissionAlert = async (title, message, checkPermission) => {
     })
 };
 
-// Bug: 
-// when asked permission. if access not given at the begining, 
-// fixing access in settings app still denies access later. 
-// persistant denial.
-
-// Bug Fixed: 
-// setTimeout gives user time to at least: open settings app + click allow + close app 
-// If shorter: might not work (settings still open); too slow for older or slower phones; 
-// If longer: may feel too slow to user
-                
-
 
 export async function galleryPermission() {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -67,9 +56,6 @@ export const cameraPermission = async() => {
     return true;
 }
 
-// CHANGED:
-// granted API used
-// instead of actionPermission: was invalid API
 
 
 
