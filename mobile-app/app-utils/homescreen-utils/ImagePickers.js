@@ -44,9 +44,9 @@ export const imageAction = async (action, navigation) => {
         
         // parse JSON response
         const data = await response.json();
-        console.log('Prediction result:', data);
+        console.log('Classification result:', data);
         
-        // navigate to result screen with prediction result
+        // navigate to result screen with classification result
         navigation.navigate('Result', { result: data });
         return data;
 

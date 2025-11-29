@@ -3,8 +3,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { imageAction } from '../app-utils/homescreen-utils/ImagePickers';
 import homestyles from '../app-styles/HomeStyles';
 
-
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
 
     // Page Layout
     return (
@@ -25,7 +24,7 @@ export default function HomeScreen() {
             <View style={ homestyles.buttonRow }>
 
                 {/* Upload from Folder */}
-                <TouchableOpacity style={ homestyles.iconButton } onPress={() => imageAction('gallery')} >
+                <TouchableOpacity style={ homestyles.iconButton } onPress={() => imageAction('gallery', navigation)} >
                     <Image 
                         source={require('../assets/folderimage.png')} 
                         style={ homestyles.icon } 
@@ -35,7 +34,7 @@ export default function HomeScreen() {
                 </TouchableOpacity>
 
                 {/* Camera Upload */}
-                <TouchableOpacity style={ homestyles.iconButton } onPress={() => imageAction('camera')} >
+                <TouchableOpacity style={ homestyles.iconButton } onPress={() => imageAction('camera', navigation)} >
                     <Image 
                         source={require('../assets/cameraimage.png')} 
                         style={ homestyles.icon } 
