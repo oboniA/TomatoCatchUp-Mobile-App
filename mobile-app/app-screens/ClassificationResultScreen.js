@@ -30,7 +30,7 @@ export default function ResultScreen({ route, navigation }) {
                 
                 {/* status */}
                 <View style={resultstyles.statusContainer}>
-                    <Text style={resultstyles.statusLabel}>Leaf Health Status</Text>
+                    <Text style={resultstyles.statusLabel}> Leaf Health Status </Text>
                     <Text style={resultstyles.statusValue}>
                         {diseaseName.replace('Tomato_', '').replace(/__/g, ' ')}
                     </Text>
@@ -75,7 +75,7 @@ export default function ResultScreen({ route, navigation }) {
                     style={resultstyles.backHomeButton}
                     onPress={() => navigation.navigate('Home')}
                 >
-                    <Text style={resultstyles.backHomeText}>Analyze Another Image</Text>
+                    <Text style={resultstyles.backHomeText}> Analyze Another Leaf </Text>
                 </TouchableOpacity>
             </View>
 

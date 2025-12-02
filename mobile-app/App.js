@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import StartupScreen from './app-screens/StartupScreen';
 import HomeScreen from './app-screens/HomeScreen';
+import ImagePreviewScreen from './app-screens/ImagePreviewScreen';
 import ClassificationResultScreen from './app-screens/ClassificationResultScreen';
 
 
@@ -18,6 +19,7 @@ export default function App() {
       <NavStack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
         <NavStack.Screen name="Splash" component={StartupScreen} />
         <NavStack.Screen name="Home" component={HomeScreen} />
+        <NavStack.Screen name="Preview" component={ImagePreviewScreen} />
         <NavStack.Screen name="Result" component={ClassificationResultScreen} />
       </NavStack.Navigator>
 
