@@ -1,9 +1,8 @@
 // this file is for the image preview screen (immediately before classification result page)
-// when user uploads image it will be displayed in this screen
-// with "classify Leaf" button 
+// Addition of Loading bar animation
 
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image, ActivityIndicator, Animated } from 'react-native';
 import { classifyImage } from '../app-utils/classification-screen-utils/ClassifierAction';
 import previewstyles from '../app-styles/ImagePreviewStyles';
 
@@ -11,12 +10,66 @@ import previewstyles from '../app-styles/ImagePreviewStyles';
 export default function ImagePreviewScreen({ route, navigation }) {
 
     const { imageUri } = route.params;
-
     // state variable to track loading status
-    // isLoading - waiting for response from server
-    // setLoading - update loading status
     const [isLoading, setIsLoading] = useState(false);
+    // Loading Bar animation
+    const [showLoadingBar, setShowLoadingBar] = useState(false);
+    // animation setup
+    const progressAnimation = React.useRef(new Animated.Value(0)).current;
+    // animation duration
+    const animeTimeout = React.useRef(null);
 
+
+    // animation sequence 
+    useEffect(() => {
+        if (isLoading) {
+            Animated.loop(
+                Animated.sequence([
+                    Animated.timing(progressAnimation, {
+                        toValue: 1,
+                        duration: 2000,  // 0 → 1 over 2000ms
+                        useNativeDriver: false,
+                    }),
+                    Animated.timing(progressAnimation, {
+                        toValue: 0,
+                        duration: 500,  // 1 → 0 over 500ms
+                        useNativeDriver: false,
+                    }),
+                ])
+            ).start();
+        } else {
+            progressAnimation.setValue(0);
+        }
+    }, [isLoading]);
+
+    // controls if loading bar visible.
+    useEffect(() => {
+        if (isLoading) {
+            animeTimeout.current = setTimeout(() => {
+                setShowLoadingBar(true);
+            }, 600);  // bar appears after 600ms
+        } else {
+            if (animeTimeout.current) {
+                clearTimeout(animeTimeout.current);
+            }
+            setShowLoadingBar(false);
+        }
+
+        return () => {
+            if (animeTimeout.current) {
+                clearTimeout(animeTimeout.current);
+            }
+        };
+    }, [isLoading]);
+
+    // calculate width of progress bar based on animation value
+    const loadProgressWidth = progressAnimation.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['10%', '90%'],
+    });
+
+
+    // function to handle leaf classification
     const handleClassification = async () => {
         setIsLoading(true);
         try {
@@ -33,6 +86,7 @@ export default function ImagePreviewScreen({ route, navigation }) {
         }
     };
 
+    
     return (
         <View style={previewstyles.container}>
 
@@ -48,6 +102,24 @@ export default function ImagePreviewScreen({ route, navigation }) {
             <View style={previewstyles.imageContainer}>
                 <Image source={{ uri: imageUri }} style={previewstyles.image} resizeMode="contain" />
             </View>
+
+            {/* loading indicator */}
+            {/* only shows if request takes longer than 600ms */}
+            {showLoadingBar && (
+                <View style={previewstyles.loadingBarSection}>
+                    <ActivityIndicator size="small" color="#ea0505ff" />
+                    <Text style={previewstyles.analyzingText}> Analyzing Leaf...</Text>
+                    
+                    <View style={previewstyles.progressBarContainer}>
+                        <Animated.View 
+                            style={[
+                                previewstyles.progressBar,
+                                { width: loadProgressWidth }
+                            ]}
+                        />
+                    </View>
+                </View>
+            )}
 
             {/* buttons */}
             <View style={previewstyles.buttonContainer}>
@@ -74,3 +146,8 @@ export default function ImagePreviewScreen({ route, navigation }) {
         </View>
     );
 }
+
+
+// TODO:
+// Create Loading Animation as a seperate function.
+// Refractor Loading Animation in a seperate file as a Custom Hook. 

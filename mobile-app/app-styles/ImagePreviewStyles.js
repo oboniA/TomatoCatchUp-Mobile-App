@@ -82,4 +82,25 @@ export default StyleSheet.create({
         color: '#fff',
     },
 
+    loadingBarSection: {
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        alignItems: 'center',
+        gap: 10,
+    },
+
+    progressBarContainer: {
+        width: 250,
+        height: 6,
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderRadius: 3,
+        overflow: 'hidden',
+    },
+
+    progressBar: {
+        height: '100%',
+        backgroundColor: '#4CAF50',
+        borderRadius:3,
+    },
+    
 });

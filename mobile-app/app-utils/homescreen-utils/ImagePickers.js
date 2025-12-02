@@ -23,9 +23,3 @@ export const imageAction = async (action, navigation) => {
     navigation.navigate('Preview', { imageUri: getImage.uri });
     return getImage;
 };
-
-
-// CHANGES:
-// Added a new parameter called navigation.
-// Moved Backend URL to ClassifierActions.js file.
-// Moved the try-catch block to ClassifierActions.js file.
