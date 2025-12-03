@@ -17,9 +17,7 @@ export const classifyImage = async (imageUri) => {
         const response = await fetch(BACKEND_URL, {
             method: 'POST',
             body: formData,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
+            headers: {},
         });
         
         // if response is successful give classification result
@@ -34,3 +32,8 @@ export const classifyImage = async (imageUri) => {
         return null;
     }
 };
+
+
+// CHANGES:
+// headers: {} because fetch with FormData automatically sets the correct headers. 
+// Removed 'Content-Type': 'multipart/form-data' to avoid boundary issues.

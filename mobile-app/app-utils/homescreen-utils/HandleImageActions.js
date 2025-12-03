@@ -53,7 +53,7 @@ export const imagePickerCamera = async() => {
     });
 
     // when user captures an image
-    if (!cameraCapture.canceled) {
+    if (!accessCamera.canceled) {
         const capturedImage = accessCamera.assets[0]  // picks first image
         Alert.alert(SUCCESS_MESSAGES.IMAGE_PICKED, capturedImage.uri);
         return capturedImage;
@@ -62,7 +62,3 @@ export const imagePickerCamera = async() => {
         return null;
     }
 };
-
-
-
-
