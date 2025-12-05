@@ -28,9 +28,9 @@ export default function StartupScreen() {
         }, 500); // 0.5 sec delay after logo
       });
 
-      // Navigate to Home after 4 second
+    // navigate to Home after 4 second
     const switchToHomeScreen = setTimeout(() => {
-      nav.replace('Home');
+      nav.replace('SelectLanguage');
     }, 5000);
 
      return () => {

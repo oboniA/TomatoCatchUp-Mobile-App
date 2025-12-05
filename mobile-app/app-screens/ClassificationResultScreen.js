@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import resultstyles from '../app-styles/ClassificationResultStyles';
+import { useLanguage } from '../app-utils/multi-language-utils/LanguageProvider';
 
 export default function ResultScreen({ route, navigation }) {
-
+    const { t } = useLanguage();
     const { result } = route.params;
     const diseaseName = result.prediction;
 
@@ -22,7 +23,7 @@ export default function ResultScreen({ route, navigation }) {
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Text style={resultstyles.backButton}>←</Text>
                 </TouchableOpacity>
-                <Text style={resultstyles.title}>Analysis Result</Text>
+                <Text style={resultstyles.title}>{t('analysis_result')}</Text>
             </View>
 
             {/* main Content */}
@@ -30,7 +31,7 @@ export default function ResultScreen({ route, navigation }) {
                 
                 {/* status */}
                 <View style={resultstyles.statusContainer}>
-                    <Text style={resultstyles.statusLabel}> Leaf Health Status </Text>
+                    <Text style={resultstyles.statusLabel}> {t('leaf_health_status')} </Text>
                     <Text style={resultstyles.statusValue}>
                         {diseaseName.replace('Tomato_', '').replace(/__/g, ' ')}
                     </Text>
@@ -38,32 +39,32 @@ export default function ResultScreen({ route, navigation }) {
 
                 {/* disease details */}
                 <View style={resultstyles.detailsCard}>
-                    <Text style={resultstyles.cardTitle}>Description</Text>
+                    <Text style={resultstyles.cardTitle}>{t('description')}</Text>
                     <Text style={resultstyles.cardText}>{result.description}</Text>
                 </View>
 
                 <View style={resultstyles.detailsCard}>
-                    <Text style={resultstyles.cardTitle}>Symptoms</Text>
+                    <Text style={resultstyles.cardTitle}>{t('symptoms')}</Text>
                     <Text style={resultstyles.cardText}>{result.symptoms}</Text>
                 </View>
 
                 {result.treatment !== 'N/A' && (
                     <View style={resultstyles.detailsCard}>
-                        <Text style={resultstyles.cardTitle}>Treatment</Text>
+                        <Text style={resultstyles.cardTitle}>{t('treatment')}</Text>
                         <Text style={resultstyles.cardText}>{result.treatment}</Text>
                     </View>
                 )}
 
                 {result.prevention !== 'N/A' && (
                     <View style={resultstyles.detailsCard}>
-                        <Text style={resultstyles.cardTitle}>Prevention</Text>
+                        <Text style={resultstyles.cardTitle}>{t('prevention')}</Text>
                         <Text style={resultstyles.cardText}>{result.prevention}</Text>
                     </View>
                 )}
 
                 {result.read_more && (
                     <TouchableOpacity style={resultstyles.readMoreButton} onPress={handleReadMore}>
-                        <Text style={resultstyles.readMoreText}>Read More →</Text>
+                        <Text style={resultstyles.readMoreText}>{t('read_more')}</Text>
                     </TouchableOpacity>
                 )}
 
@@ -75,10 +76,13 @@ export default function ResultScreen({ route, navigation }) {
                     style={resultstyles.backHomeButton}
                     onPress={() => navigation.navigate('Home')}
                 >
-                    <Text style={resultstyles.backHomeText}> Analyze Another Leaf </Text>
+                    <Text style={resultstyles.backHomeText}> {t('analyze_another_leaf')} </Text>
                 </TouchableOpacity>
             </View>
 
         </View>
     );
 }
+
+// CHANGES:
+// changed resultstyle labels from texts to translation dictionary keys using {t('key')}

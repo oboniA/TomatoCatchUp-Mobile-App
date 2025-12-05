@@ -2,23 +2,27 @@ import React from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { imageAction } from '../app-utils/homescreen-utils/ImagePickers';
 import homestyles from '../app-styles/HomeStyles';
+import { useLanguage } from '../app-utils/multi-language-utils/LanguageProvider';
+
 
 export default function HomeScreen({ navigation }) {
+    
+    // translation function
+    const { t } = useLanguage();
 
-    // Page Layout
+    // interface rendering
     return (
-
         // home page background
         <View style={ homestyles.container } >
             
             {/* page logo */}
             <View style={ homestyles.header } >
                 <Image source={require('../assets/logo.png')} style={ homestyles.homeLogo } />
-                <Text style={ homestyles.logoText }> TomatoCatchUp </Text>
+                <Text style={ homestyles.logoText }> {t('app_name')} </Text>
             </View>
 
             {/* page title */}
-            <Text style={ homestyles.title } > Tomato Leaf Disease Detector </Text>
+            <Text style={ homestyles.title } > {t('tomato_leaf_disease_detector')} </Text>
             
             {/* photo buttons */}
             <View style={ homestyles.buttonRow }>
@@ -30,7 +34,7 @@ export default function HomeScreen({ navigation }) {
                         style={ homestyles.icon } 
                         resizeMode="contain"
                     />
-                    <Text style={ homestyles.iconLabel } > Upload Leaf Image </Text>
+                    <Text style={ homestyles.iconLabel } > {t('upload_leaf_image')} </Text>
                 </TouchableOpacity>
 
                 {/* Camera Upload */}
@@ -40,9 +44,13 @@ export default function HomeScreen({ navigation }) {
                         style={ homestyles.icon } 
                         resizeMode="contain"
                     />
-                    <Text style={ homestyles.iconLabel } > Capture Leaf Image </Text>
+                    <Text style={ homestyles.iconLabel } > {t('capture_leaf_image')} </Text>
                 </TouchableOpacity>
             </View>
         </View>
     );
 }
+
+
+// CHANGES:
+// changed homestyles labels from texts to translation dictionary keys using {t('key')}

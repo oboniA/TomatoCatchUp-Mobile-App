@@ -5,10 +5,12 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ActivityIndicator, Animated } from 'react-native';
 import { classifyImage } from '../app-utils/classification-screen-utils/ClassifierAction';
 import previewstyles from '../app-styles/ImagePreviewStyles';
-
+import { useLanguage } from '../app-utils/multi-language-utils/LanguageProvider';
 
 export default function ImagePreviewScreen({ route, navigation }) {
-
+    // translation function
+    const { t } = useLanguage();
+    // get image URI from navigation params
     const { imageUri } = route.params;
     // state variable to track loading status
     const [isLoading, setIsLoading] = useState(false);
@@ -54,7 +56,7 @@ export default function ImagePreviewScreen({ route, navigation }) {
             }
             setShowLoadingBar(false);
         }
-
+        // cleanup function
         return () => {
             if (animeTimeout.current) {
                 clearTimeout(animeTimeout.current);
@@ -86,7 +88,7 @@ export default function ImagePreviewScreen({ route, navigation }) {
         }
     };
 
-    
+    // interface rendering
     return (
         <View style={previewstyles.container}>
 
@@ -95,7 +97,7 @@ export default function ImagePreviewScreen({ route, navigation }) {
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Text style={previewstyles.backButton}>←</Text>
                 </TouchableOpacity>
-                <Text style={previewstyles.title}> Leaf Preview </Text>
+                <Text style={previewstyles.title}> {t('leaf_preview')} </Text>
             </View>
 
             {/* image preview */}
@@ -108,7 +110,7 @@ export default function ImagePreviewScreen({ route, navigation }) {
             {showLoadingBar && (
                 <View style={previewstyles.loadingBarSection}>
                     <ActivityIndicator size="small" color="#ea0505ff" />
-                    <Text style={previewstyles.analyzingText}> Analyzing Leaf...</Text>
+                    <Text style={previewstyles.analyzingText}> {t('analyzing_leaf')}</Text>
                     
                     <View style={previewstyles.progressBarContainer}>
                         <Animated.View 
@@ -128,7 +130,7 @@ export default function ImagePreviewScreen({ route, navigation }) {
                     onPress={() => navigation.goBack()}
                     disabled={isLoading}
                 >
-                    <Text style={previewstyles.cancelButtonText}>Cancel</Text>
+                    <Text style={previewstyles.cancelButtonText}>{t('cancel')}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
@@ -139,7 +141,7 @@ export default function ImagePreviewScreen({ route, navigation }) {
                     {isLoading ? (
                         <ActivityIndicator color="#cf0a0aff" />
                     ) : (
-                        <Text style={previewstyles.classifyButtonText}>Classify Leaf</Text>
+                        <Text style={previewstyles.classifyButtonText}>{t('classify_leaf')}</Text>
                     )}
                 </TouchableOpacity>
             </View>
@@ -147,6 +149,9 @@ export default function ImagePreviewScreen({ route, navigation }) {
     );
 }
 
+
+// CHANGES:
+// changed previewstyles labels from texts to translation dictionary keys using {t('key')}
 
 // TODO:
 // Create Loading Animation as a seperate function.
