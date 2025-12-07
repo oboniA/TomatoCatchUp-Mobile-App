@@ -1,21 +1,35 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Linking } from 'react-native';
+// import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, Linking } from 'react-native';  // ActivityIndicator
 import resultstyles from '../app-styles/ClassificationResultStyles';
 import { useLanguage } from '../app-utils/multi-language-utils/LanguageProvider';
 
+
 export default function ResultScreen({ route, navigation }) {
-    const { t } = useLanguage();
+    // 'en' or 'bn' based on user selection
+    const { t, language } = useLanguage();
     const { result } = route.params;
     const diseaseName = result.prediction;
 
-    // function to open a link in the browser
+
+    // helper function to pick the correct language field
+    // try to find a matching field in database (MongoDB) for selected language (bn or en)
+    // if not found, fall back to English
+    // if still not found, return empty string
+    const getLanguageField = (field) => {
+        return result[field]?.[language] || result[field]?.['en'] || '';
+    };
+
+
+    // function to open :read_more" link in the browser
     const handleReadMore = () => {
         if (result.read_more) {
             Linking.openURL(result.read_more).catch(err => console.error('Error opening URL:', err));
         }
     };
-    return (
 
+
+    // interface rendering
+    return (
         <View style={resultstyles.container}>
 
             {/* header */}
@@ -40,25 +54,25 @@ export default function ResultScreen({ route, navigation }) {
                 {/* disease details */}
                 <View style={resultstyles.detailsCard}>
                     <Text style={resultstyles.cardTitle}>{t('description')}</Text>
-                    <Text style={resultstyles.cardText}>{result.description}</Text>
+                    <Text style={resultstyles.cardText}>{getLanguageField('description')}</Text>
                 </View>
 
                 <View style={resultstyles.detailsCard}>
                     <Text style={resultstyles.cardTitle}>{t('symptoms')}</Text>
-                    <Text style={resultstyles.cardText}>{result.symptoms}</Text>
+                    <Text style={resultstyles.cardText}>{getLanguageField('symptoms')}</Text>
                 </View>
-
-                {result.treatment !== 'N/A' && (
-                    <View style={resultstyles.detailsCard}>
-                        <Text style={resultstyles.cardTitle}>{t('treatment')}</Text>
-                        <Text style={resultstyles.cardText}>{result.treatment}</Text>
-                    </View>
-                )}
 
                 {result.prevention !== 'N/A' && (
                     <View style={resultstyles.detailsCard}>
                         <Text style={resultstyles.cardTitle}>{t('prevention')}</Text>
-                        <Text style={resultstyles.cardText}>{result.prevention}</Text>
+                        <Text style={resultstyles.cardText}>{getLanguageField('prevention')}</Text>
+                    </View>
+                )}
+
+                {result.treatment !== 'N/A' && (
+                    <View style={resultstyles.detailsCard}>
+                        <Text style={resultstyles.cardTitle}>{t('treatment')}</Text>
+                        <Text style={resultstyles.cardText}>{getLanguageField('treatment')}</Text>
                     </View>
                 )}
 
@@ -84,5 +98,7 @@ export default function ResultScreen({ route, navigation }) {
     );
 }
 
+
 // CHANGES:
-// changed resultstyle labels from texts to translation dictionary keys using {t('key')}
+// 1. Added getLanguageField helper function to fetch the correct language field from the result object.
+// 2. under UI Rendering: used getLanguageField to display description, symptoms, prevention, and treatment in the selected language.
